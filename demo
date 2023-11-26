@@ -1,0 +1,817 @@
+SLIP 1
+QUE1=>
+vector1 = seq(10,40 , length.out=4) 
+vector2 = c(20, 10, 40, 40) 
+print("Original Vectors:") 
+print(vector1) 
+print(vector2) 
+add vector1+vector2 
+cat("Sum of vector is ",add, "\n") 
+sub_vector= vector1-vector2 
+cat("Substraction of vector is ",sub_vector, "\n") 
+mul_vector= vector1 * vector2 
+cat("Multiplication of vector is ",mul_vector, "\n") 
+div_vector = vector1 / vector2 
+cat("Division of two Vectors:",div_vector,"\n") 
+
+QUE2=>
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+#values from student_dataset.csv file
+X = np.array([2.5,5.1,3.2,8.5,3.5]).reshape(-1, 1)
+y = np.array([21,47,27,75,30])
+# Create a linear regression model
+model = LinearRegression()
+model.fit(X, y)
+# Predict the values using the trained model
+y_pred = model.predict(X)
+# Calculate mean absolute error (MAE)
+mae = mean_absolute_error(y, y_pred)
+# Calculate mean squared error (MSE)
+mse = mean_squared_error(y, y_pred)
+# Calculate root mean squared error (RMSE)
+rmse = np.sqrt(mse)
+# Print the results
+print("Mean Absolute Error (MAE):", mae)
+print("Mean Squared Error (MSE):", mse)
+print("Root Mean Squared Error (RMSE):", rmse)
+
+
+
+
+
+
+
+
+
+
+SLIP2
+
+QUE1=>
+table<-function(number)
+{ 
+for(t in 1:10)
+{ 
+print(paste(number,'*',t,'=',number*t))
+} 
+} 
+table(2)
+
+QUE2=>
+#Importing libraries
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+data = make_blobs(n_samples=300, n_features=2, centers=5,
+cluster_std=1.8,random_state=101)
+data[0].shape
+data[1]
+plt.scatter(data[0][:,0],data[0][:,1],c=data[1],cmap='brg')
+from sklearn.cluster import KMeans
+kmeans = KMeans(n_clusters=5)
+kmeans.fit(data[0])
+kmeans.cluster_centers_
+kmeans.labels_f, (ax1, ax2) = plt.subplots(1, 2, sharey=True,figsize=(10,6))
+ax1.set_title('K Means')
+ax1.scatter(data[0][:,0],data[0][:,1],c=kmeans.labels_,cmap='brg')
+ax2.set_title("Original")
+ax2.scatter(data[0][:,0],data[0][:,1],c=data[1],cmap='brg')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP3
+
+QUE1=>
+n=567
+Reverse=function(n)
+{ 
+sum=0
+rev=0
+while(n>0)
+{ 
+r=n%%10
+sum=sum+r 
+rev=rev*10+r
+n=n%/%10
+} 
+cat("reverse=",rev) 
+cat("sum of number=",sum) 
+} 
+Reverse(n)
+
+
+QUE2=>
+import numpy as np# Data
+x = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13])
+y = np.array([1, 3, 2, 5, 7, 8, 8, 9, 10, 12, 16, 18])
+# Calculate the mean of x and y
+mean_x = np.mean(x)
+mean_y = np.mean(y)
+# Calculate the differences between each data point and the mean
+x_diff = x - mean_x
+y_diff = y - mean_y
+# Calculate b1 (slope) by taking the dot product of x_diff and y_diff divided by the dot product of x_diff with itself
+b1 = np.sum(x_diff * y_diff) / np.sum(x_diff ** 2)
+# Calculate b0 (intercept) using the formula b0 = mean(y) - b1 * mean(x)
+b0 = mean_y - b1 * mean_x
+# Print the estimated coefficients
+print("Estimated Coefficient b0 (Intercept):", b0)
+print("Estimated Coefficient b1 (Slope):", b1)
+
+
+
+
+
+
+
+
+
+
+SLIP4
+
+QUE1=>
+matrix1<-matrix(c(1,2,3,4,5,6),nrow=2)
+print(matrix1) 
+matrix2<-matrix(c(7,8,9,10,11,12),nrow=2)
+print(matrix2) 
+result<-matrix1+matrix2
+cat("Addition : ","\n") 
+print(result) 
+
+QUE2=>
+# Define the dataset
+weather = ['Sunny', 'Sunny', 'Overcast', 'Rainy', 'Rainy', 'Rainy', 'Overcast', 'Sunny', 'Sunny', 'Rainy', 'Sunny', 'Overcast', 'Overcast', 'Rainy']
+temp = ['Hot', 'Hot', 'Hot', 'Mild', 'Cool', 'Cool', 'Cool', 'Mild', 'Cool', 'Mild', 'Mild', 'Mild', 'Hot', 'Mild']
+play = ['No', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'No']
+
+# Define the new tuple [0:Overcast, 2:Mild]
+new_weather = 'Overcast'
+new_temp = 'Mild'
+
+# Calculate the prior probabilities
+total_samples = len(play)
+count_yes = play.count('Yes')
+count_no = play.count('No')
+prior_yes = count_yes / total_samples
+prior_no = count_no / total_samples
+
+# Calculate the likelihood for 'Yes' class
+likelihood_yes = (weather.count(new_weather) / count_yes) * (temp.count(new_temp) / count_yes)
+
+# Calculate the likelihood for 'No' class
+likelihood_no = (weather.count(new_weather) / count_no) * (temp.count(new_temp) / count_no)
+
+# Calculate the posterior probabilities
+posterior_yes = prior_yes * likelihood_yes
+posterior_no = prior_no * likelihood_no
+
+# Predict the class with the highest posterior probability
+if posterior_yes > posterior_no:
+    prediction = 'Yes'
+else:
+    prediction = 'No'
+
+print("Predicted class for [{}: {}, {}: {}] is: {}".format(0, new_weather, 2, new_temp, prediction))
+SLIP5
+
+QUE1=>
+# Create two factors
+factor1 <- factor(c("A", "B", "C"))
+factor2 <- factor(c("X", "Y", "Z"))
+# Concatenate the factors
+concatenated_factors <- c(factor1, factor2)
+# Print the result
+print(concatenated_factors)
+
+QUE2=>
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+pima = pd.read_csv("diabetes.csv") 
+pima.head()
+import seaborn as sns
+corr = pima.corr()
+ax = sns.heatmap(corr, vmin=-1, vmax=1, center=0,
+cmap=sns.diverging_palette(20, 220, n=200),
+square=True
+) 
+ax.set_xticklabels(
+ ax.get_xticklabels(),
+ rotation=45, 
+ horizontalalignment='right'
+);
+# feature selection
+feature_cols = ['Pregnancies', 'Insulin', 'BMI', 'Age', 'Glucose', 
+'BloodPressure', 
+'DiabetesPedigreeFunction'] 
+x = pima[feature_cols] 
+y = pima.Outcome
+# split data
+X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size = 0.3, random_state=1) 
+# build model
+classifier = DecisionTreeClassifier()
+classifier = classifier.fit(X_train, Y_train) 
+# predict
+y_pred = classifier.predict(X_test) 
+print(y_pred) 
+from sklearn.metrics import confusion_matrix
+confusion_matrix(Y_test, y_pred) 
+print(confusion_matrix(Y_test, y_pred))
+# accuracy
+print("Accuracy:", metrics.accuracy_score(Y_test,y_pred))
+SLIP6
+
+QUE1=>
+
+# Create two vectors
+vector1 <- c("apple", "banana", "orange", "apple", "grape")
+vector2 <- c(10, 20, 15, 10, 25)
+# Create a data frame
+my_data_frame <- data.frame(Fruit = vector1, Quantity = vector2)
+# Display the data frame
+print("Original Data Frame:")
+print(my_data_frame)
+# Identify and display duplicate rows
+duplicate_rows <- my_data_frame[duplicated(my_data_frame) | duplicated(my_data_frame, fromLast = TRUE), ]
+print("\nDuplicate Rows:")
+print(duplicate_rows)
+
+QUE2=>
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+dataset = pd.read_csv('Customer.csv')
+X = dataset.iloc[:, [3, 4]].values
+import scipy.cluster.hierarchy as sch
+dendrogram = sch.dendrogram(sch.linkage(X, method = 'ward'))
+plt.title('Dendrogram')
+plt.xlabel('Customers')
+plt.ylabel('Euclidean distances')
+plt.show()
+from sklearn.cluster import AgglomerativeClustering
+hc = AgglomerativeClustering(n_clusters = 5, affinity = 'euclidean', linkage = 'ward')
+y_hc = hc.fit_predict(X)
+plt.scatter(X[y_hc == 0, 0], X[y_hc == 0, 1], s = 100, c = 'red', label = 'Cluster 1')
+plt.scatter(X[y_hc == 1, 0], X[y_hc == 1, 1], s = 100, c = 'blue', label = 'Cluster 2') 
+plt.scatter(X[y_hc == 2, 0], X[y_hc == 2, 1], s = 100, c = 'green', label = 'Cluster 3')
+plt.scatter(X[y_hc == 3, 0], X[y_hc == 3, 1], s = 100, c = 'cyan', label = 'Cluster 4')
+plt.scatter(X[y_hc == 4, 0], X[y_hc == 4, 1], s = 100, c = 'magenta', label = 'Cluster 5')
+plt.title('Clusters of customers')
+plt.xlabel('Annual Income (k$)')
+plt.ylabel('Spending Score (1-100)')
+plt.legend()
+plt.show()
+
+
+
+
+
+SLIP7
+
+QUE1=>
+print("Sequence of numbers from 20 to 50:")
+print(seq(20,50))
+print("Mean of numbers from 20 to 60:")
+print(mean(20:60))
+print("Sum of numbers from 51 to 91:")
+print(sum(51:91))
+
+QUE2=>
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy import stats
+x = np.array([1,2,3,4,5,6,7,8])
+y = np.array([7,14,15,18,19,21,26,23])
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+def myfunc(x):
+ return slope * x + intercept
+mymodel = list(map(myfunc, x))
+plt.scatter(x, y)
+plt.plot(x, mymodel)
+plt.show()
+
+SLIP8
+
+QUE1=>
+Fibonacci <- numeric(10)
+Fibonacci[1] <- Fibonacci[2] <- 1 
+for (i in 3:10) Fibonacci[i] <- Fibonacci[i - 2] + Fibonacci[i - 1]
+print("First 10 Fibonacci numbers:")
+print(Fibonacci)
+
+QUE2=>  (output is not displaying though it is the program given by maam)
+# Importing Preprocessing Libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+# Importing Datasets
+dataset = pd.read_csv('CC GENERAL.csv')
+X = dataset.iloc[:, 1:].values
+# Dataset Contains Multiple Missing values
+# Replacing Missing Value by Most Repeated/Frequent Number in that column
+# Use Imputer with strategy 'most_frequent'
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(missing_values=np.nan, strategy="most_frequent")
+imputer = imputer.fit(X)
+X = imputer.transform(X)
+# Applying Feature Scalling with StandardScaler
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+X = sc_X.fit_transform(X)
+# For Finding Optimal Number of Cluster use Elbow Method
+from sklearn.cluster import KMeans
+# Apply K-Means Again With Optimal Number of Cluster that we got from Elbow method i.e. 8
+kmeans = KMeans(n_clusters=8, init='k-means++', max_iter=300, n_init=10,
+random_state=0)
+y_kmeans = kmeans.fit_predict(X)
+# Finally Append new Column i.e Cluster to Actual Dataset
+dataset['Cluster'] = y_kmeans
+dataset.head()
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP9
+
+QUE1=>
+Employees = data.frame(Name=c("Amit S","Dikisha R","Shweta J", "Jikita A","Riya M"),
+ Gender=c("M","M","F","F","F"),
+ Age=c(23,22,25,26,32),
+ Designation=c("Clerk","Manager","Exective","CEO","ASSISTANT"),
+ SSN=c("123-34-2346","123-44-779","556-24-433","123-98-987","679-77-576"))
+print("Details of the employees:") 
+print(Employees)
+
+QUE2=>
+#Import scikit-learn dataset library
+from sklearn import datasets
+#Load dataset
+cancer = datasets.load_breast_cancer()
+# print the names of the 13 features
+print("Features: ", cancer.feature_names)
+# print the label type of cancer('malignant' 'benign')
+print("Labels: ", cancer.target_names)
+# print data(feature)shape
+cancer.data.shape 
+# print the cancer data features (top 5 records)
+print(cancer.data[0:5])
+# print the cancer labels (0:malignant, 1:benign)
+print(cancer.target) 
+# Import train_test_split function
+from sklearn.model_selection import train_test_split
+# Split dataset into training set and test set
+X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target,
+                                                    test_size=0.3,random_state=109) # 70% training and 30% test
+#Import svm model
+from sklearn import svm
+#Create a svm Classifier
+clf = svm.SVC(kernel='linear') #Linear Kernel
+#Train the model using the training sets
+clf.fit(X_train, y_train)
+#Predict the response for test dataset
+y_pred = clf.predict(X_test)
+#Import scikit-learn metrics module for accuracy calculation
+from sklearn import metrics
+# Model Accuracy: how often is the classifier correct?
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+
+
+
+
+
+SLIP10
+
+QUE1=>
+nums = c(10, 20, 30, 40, 50, 60)
+print('Original vector:')
+print(nums) 
+print(paste("Maximum value of the said vector:",max(nums)))
+print(paste("Minimum value of the said vector:",min(nums)))
+
+QUE2=>
+**doubt**
+(for apriori algorithm program to run we’ve to install apyori library first) 
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP11
+
+QUE1=>
+list1 = list("x", "y", "z")
+list2 = list("X", "Y", "Z", "x", "y", "z")
+print("Original lists:")
+print(list1) 
+print(list2) 
+print("All elements of list1 that are not in list2:")
+setdiff(list2, list1)
+
+QUE2=>
+import matplotlib.pyplot as mtp
+import pandas as pd
+dataset = pd.read_csv('wholesaleCustomer.csv')
+dataset
+x = dataset.iloc[:, [3, 4]].values
+print(x)
+import scipy.cluster.hierarchy as shc
+dendro = shc.dendrogram(shc.linkage(x, method="ward"))
+mtp.title("Dendrogrma Plot")
+mtp.ylabel("Euclidean Distances")
+mtp.xlabel("Customers")
+mtp.show()
+from sklearn.cluster import AgglomerativeClustering
+hc= AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
+y_pred= hc.fit_predict(x)
+mtp.scatter(x[y_pred == 0, 0], x[y_pred == 0, 1], s = 100, c = 'blue', label = 'Cluster 1')
+mtp.scatter(x[y_pred == 1, 0], x[y_pred == 1, 1], s = 100, c = 'green', label = 'Cluster 2')
+mtp.scatter(x[y_pred== 2, 0], x[y_pred == 2, 1], s = 100, c = 'red', label = 'Cluster 3')
+mtp.scatter(x[y_pred == 3, 0], x[y_pred == 3, 1], s = 100, c = 'cyan', label = 'Cluster 4')
+mtp.scatter(x[y_pred == 4, 0], x[y_pred == 4, 1], s = 100, c = 'magenta', label = 'Cluster 5')
+mtp.title('Clusters of customers')
+mtp.xlabel('Milk')
+mtp.ylabel('Grocery')
+mtp.legend()
+mtp.show()
+
+
+
+
+
+
+
+
+SLIP12
+
+QUE1=>
+Employees = data.frame(empno=c(1,2,3,4,5),
+ empname=c("Amit S","Dikish R","Shweta J", "Jikita A","Riya M"),
+ Gender=c("M","M","F","F","F"),
+ Age=c(23,22,25,26,32),
+ Designation=c("Clerk","Manager","Exective","CEO","ASSISTANT"))
+print("Details of the employees:") 
+print(Employees)
+
+QUE2=>
+import pandas
+from sklearn import linear_model
+df = pandas.read_csv("car.csv")
+X = df[['Weight', 'Volume']]
+y = df['CO2']
+regr = linear_model.LinearRegression()
+regr.fit(X, y)
+#predict the CO2 emission of a car where the weight is 2300kg, and the volume is 1300cm3:
+predictedCO2 = regr.predict([[2300, 1300]])
+print(predictedCO2)
+
+
+SLIP13
+QUE1=>
+digits <- c(7,2,6,3,4,8)
+Frequency <- c(1,2,3,4,5,6)
+# Plot the chart.
+pie(digits, Frequency)
+
+QUE2=>
+import pandas as pd
+students_data = pd.read_csv("StudentsPerformance.csv")
+# Display the shape of the dataset
+print("Shape of the dataset:", students_data.shape)
+# Display the top rows of the dataset
+print("\nTop rows of the dataset:")
+print(students_data.head()
+
+
+
+
+
+
+
+
+
+SLIP14
+
+QUE1=>
+list_data <- list("Ram Sharma","Sham Varma","Raj Jadhav", "Ved Sharma")
+print(list_data)
+new_Emp <-"Kavya Anjali"
+list_data <-append(list_data,new_Emp)
+print(list_data)
+list_data[3] <- NULL
+print(list_data)
+
+QUE2=>
+**doubt**
+(for apriori algorithm program to run we’ve to install apyori library first)
+
+
+
+
+
+
+
+
+
+
+
+SLIP15
+
+QUE1=>
+vector1 = seq(10,40 , length.out=4)
+vector2 = c(20, 10, 40, 40)
+print("Original Vectors:")
+print(vector1)
+print(vector2)
+add= vector1+vector2
+cat("Sum of vector is ",add, "\n")
+sub_vector= vector1-vector2
+cat("Substraction of vector is ",sub_vector, "\n")
+mul_vector= vector1 * vector2
+cat("Multiplication of vector is ",mul_vector, "\n")
+div_vector = vector1 / vector2
+cat("Division of two Vectors:",div_vector)
+
+QUE2=>
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import LabelEncoder
+
+# Load the dataset
+data = pd.DataFrame({
+    'Age': [36, 42, 23, 52, 43, 44, 66, 35, 52, 35, 24, 18, 45],
+    'Experience': [10, 12, 4, 4, 21, 14, 3, 14, 13, 5, 3, 3, 9],
+    'Rank': [9, 4, 6, 4, 8, 5, 7, 9, 7, 9, 5, 7, 9],
+    'Nationality': ['UK', 'USA', 'N', 'USA', 'USA', 'UK', 'N', 'UK', 'N', 'N', 'USA', 'UK', 'UK'],
+    'Go': ['NO', 'NO', 'NO', 'NO', 'YES', 'NO', 'YES', 'YES', 'YES', 'YES', 'NO', 'YES', 'YES']
+})
+# Encode 'Nationality' feature
+label_encoder = LabelEncoder()
+data['Nationality'] = label_encoder.fit_transform(data['Nationality'])
+# Define features (X) and target (y)
+X = data.drop(columns=['Go'])
+y = data['Go']
+# Create a Decision Tree Classifier
+clf = DecisionTreeClassifier(random_state=42)
+# Train the classifier on the entire dataset
+clf.fit(X, y)
+# Create a new data point for prediction
+new_data = pd.DataFrame({
+    'Age': [40],
+    'Experience': [10],
+    'Rank': [7],
+    'Nationality': ['USA'})
+# Encode 'Nationality' feature
+new_data['Nationality'] = label_encoder.transform(new_data['Nationality'])
+# Make a prediction for the new data point
+prediction = clf.predict(new_data)
+print("Can the comedian go to the show:", prediction[0])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP16
+
+QUE1=>
+# Import lattice
+library(lattice)
+ # Create data
+gfg <- data.frame(x = c(26,35,32,40,35,50), 
+ grp = rep(c("group 1", "group 2",
+ "group 3"),
+ each = 2),
+ subgroup = LETTERS[1:2])
+ # Create grouped barplot using lattice
+barchart(x ~ grp, data = gfg, groups = subgroup)
+
+QUE2=>
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+pima = pd.read_csv("diabetes.csv") 
+pima.head()
+import seaborn as sns
+corr = pima.corr()
+ax = sns.heatmap(
+ corr, 
+ vmin=-1, vmax=1, center=0, 
+ cmap=sns.diverging_palette(20, 220, n=200),
+ square=True
+) 
+ax.set_xticklabels(
+ ax.get_xticklabels(),
+ rotation=45, 
+ horizontalalignment='right'
+);
+# feature selection
+feature_cols = ['Pregnancies', 'Insulin', 'BMI', 'Age', 'Glucose', 
+'BloodPressure', 
+'DiabetesPedigreeFunction'] 
+x = pima[feature_cols] 
+y = pima.Outcome
+# split data
+X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size = 0.3, random_state=1) 
+# build model
+classifier = DecisionTreeClassifier()
+classifier = classifier.fit(X_train, Y_train) 
+# predict
+y_pred = classifier.predict(X_test) 
+print(y_pred) 
+from sklearn.metrics import confusion_matrix
+confusion_matrix(Y_test, y_pred) 
+print(confusion_matrix(Y_test, y_pred))
+# accuracy
+print("Accuracy:", metrics.accuracy_score(Y_test,y_pred))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP17
+
+QUE1=>
+Fibonacci <- numeric(20)
+Fibonacci[1] <- Fibonacci[2] <- 1 
+for (i in 3:20) Fibonacci[i] <- Fibonacci[i - 2] + Fibonacci[i - 1]
+print("First 20 Fibonacci numbers:")
+print(Fibonacci)
+
+QUE2=>
+import pandas as pd 
+import matplotlib.pyplot as plt 
+Stock_Market = {'Year':
+[2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2016,2016,2016,2016, 
+2016,2016,2016,2016,2016,2016,2016,2016], 
+'Month': [12, 11,10,9,8,7,6,5,4,3,2,1,12,11,10,9,8,7,6,5,4,3,2,1], 
+'Interest_Rate': 
+[2.75,2.5,2.5,2.5,2.5,2.5,2.5,2.25,2.25,2.25,2,2,2,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75,1.75], 
+'Unemployment_Rate': 
+[5.3,5.3,5.3,5.3,5.4,5.6,5.5,5.5,5.5,5.6,5.7,5.9,6,5.9,5.8,6.1,6.2,6.1,6.1,6.1,5.9,6.2,6.2,6.1], 
+'Stock_Index_Price': 
+[1464,1394,1357,1293,1256,1254,1234,1195,1159,1167,1130,1075,1047,965,943,958,971 
+,949,884,866,876,822,704,719] 
+} 
+df = pd.DataFrame(Stock_Market,columns=['Year','Month','Interest_Rate','Unemployment_Rate','Stock_Index_Price']) 
+plt.scatter(df['Interest_Rate'], df['Stock_Index_Price'], color='purple') 
+plt.title('Stock Index Price Vs Interest Rate', fontsize=14) 
+plt.xlabel('Interest Rate', fontsize=14) 
+plt.ylabel('Stock Index Price', fontsize=14) 
+plt.grid(True) 
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLIP18
+
+QUE1=>
+nums = c(10, 20, 30, 40, 50, 60)
+print('Original vector:')
+print(nums) 
+print(paste("Maximum value of the said vector:",max(nums)))
+print(paste("Minimum value of the said vector:",min(nums)))
+
+QUE2=>
+import matplotlib.pyplot as plt 
+import numpy as np 
+from scipy import stats 
+x = np.array([1,2,3,4,5,6,7,8]) 
+y = np.array([7,14,15,18,19,21,26,23]) 
+slope, intercept, r, p, std_err = stats.linregress(x, y) 
+def myfunc(x): 
+ return slope * x + intercept 
+mymodel = list(map(myfunc, x)) 
+plt.scatter(x, y) 
+plt.plot(x, mymodel) 
+plt.show()
+
+
+SLIP19
+
+QUE1=>
+Students = data.frame(Rollno=c(21,22,23,24,25),
+ Name=c("Riya M","Shweta J","Aarya D", "JAMES A","LAURA M"),
+ Addresss=c("Bhekrai nagar","Hadapsar","Uruli kanchan","Hadapsar","Bhekrai nagar"),
+ Marks=c(80,67,90,92,70)) 
+ print("Details of the Students:") 
+print(Students)
+
+QUE2=>
+import pandas
+from sklearn import linear_model
+from sklearn.linear_model import LinearRegression
+df = pandas.read_csv("car.csv")
+X = df[['Weight', 'Volume']]
+y = df['CO2']
+regr = linear_model.LinearRegression()
+regr.fit(X, y)
+test_y = regr.predict(X)
+#predict the CO2 emission of a car where the weight is 2300kg, and the volume is 1300cm3:
+predictedCO2 = regr.predict([[2300, 1300]])
+print(predictedCO2)
+SLIP20
+
+QUE1=>
+name = c('Aarya', 'Riya', 'Shweta', 'Anjali', 'Geeta', 'Mayuri', 'Kirti', 'Akansha', 'Kavita', 'Jagruti')
+score = c(12.5, 9, 16.5, 12, 9, 20, 14.5, 13.5, 8, 19)
+attempts = c(1, 3, 2, 3, 2, 3, 1, 1, 2, 1)
+qualify = c('yes', 'no', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes')
+print("Original data frame:")
+print(name)
+print(score)
+print(attempts)
+print(qualify)
+df = data.frame(name, score, attempts, qualify) 
+print(df)
+
+QUE2=>
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+dataset = pd.read_csv('Customer.csv')
+X = dataset.iloc[:, [3, 4]].values
+from sklearn.cluster import AgglomerativeClustering
+hc = AgglomerativeClustering(n_clusters = 5, affinity = 'euclidean', linkage = 'ward')
+y_hc = hc.fit_predict(X)
+plt.scatter(X[y_hc == 0, 0], X[y_hc == 0, 1], s = 100, c = 'red', label = 'Cluster 1')
+plt.scatter(X[y_hc == 1, 0], X[y_hc == 1, 1], s = 100, c = 'blue', label = 'Cluster 2') 
+plt.scatter(X[y_hc == 2, 0], X[y_hc == 2, 1], s = 100, c = 'green', label = 'Cluster 3')
+plt.scatter(X[y_hc == 3, 0], X[y_hc == 3, 1], s = 100, c = 'cyan', label = 'Cluster 4')
+plt.scatter(X[y_hc == 4, 0], X[y_hc == 4, 1], s = 100, c = 'magenta', label = 'Cluster 5')
+plt.title('Clusters of customers')
+plt.xlabel('Annual Income (k$)')
+plt.ylabel('Spending Score (1-100)')
+plt.legend()
+plt.show()
